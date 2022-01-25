@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 80,
+            "activePatchIndex": 106,
             "patches": [
                 {
                     "date": 1643107097002,
@@ -328,6 +328,110 @@
                 {
                     "date": 1643123576734,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -169,9 +169,9 @@\n       duration: duration,\n       delay: (digits.length - 1 - i) * letterAnimationDelay + animationDelay,\n       step(value) {\n         digit.offset.y =\n-          offset + (value % (fontSize * lineHeight * DIGITS_COUNT));\n+          offset - (value % (fontSize * lineHeight * DIGITS_COUNT));\n         digit.node::attr(\n           \"transform\",\n           `translate(${digit.offset.x}, ${digit.offset.y})`\n         );\n"
+                },
+                {
+                    "date": 1643126003295,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -235,7 +235,7 @@\n   };\n   const resume = () => {\n     transitions.forEach((transition) => transition.resume());\n   };\n-\n+  pause();\n   return { cancel, pause, resume };\n };\n"
+                },
+                {
+                    "date": 1643126082933,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n const ROTATIONS = 1;\n \n const createDigitRoulette = (svg, fontSize, lineHeight, id) => {\n   // const digits = [0, 9,8,7,6,5,4,3,2,1, 0];\n-  const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0];\n+  const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];\n   const roulette = svg\n     ::append(\"g\")\n     ::attr(\"id\", `digit-${id}`)\n     ::style(\"filter\", `url(#motionFilter-${id})`);\n"
+                },
+                {
+                    "date": 1643126115594,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -235,7 +235,7 @@\n   };\n   const resume = () => {\n     transitions.forEach((transition) => transition.resume());\n   };\n-  pause();\n+  // pause();\n   return { cancel, pause, resume };\n };\n"
+                },
+                {
+                    "date": 1643126181353,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n const ROTATIONS = 1;\n \n const createDigitRoulette = (svg, fontSize, lineHeight, id) => {\n   // const digits = [0, 9,8,7,6,5,4,3,2,1, 0];\n-  const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];\n+  const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ,0];\n   const roulette = svg\n     ::append(\"g\")\n     ::attr(\"id\", `digit-${id}`)\n     ::style(\"filter\", `url(#motionFilter-${id})`);\n"
+                },
+                {
+                    "date": 1643126647890,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -235,7 +235,7 @@\n   };\n   const resume = () => {\n     transitions.forEach((transition) => transition.resume());\n   };\n-  // pause();\n+  pause();\n   return { cancel, pause, resume };\n };\n"
+                },
+                {
+                    "date": 1643126830556,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -235,7 +235,7 @@\n   };\n   const resume = () => {\n     transitions.forEach((transition) => transition.resume());\n   };\n-  pause();\n+  // pause();\n   return { cancel, pause, resume };\n };\n"
+                },
+                {
+                    "date": 1643126866650,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     ::style(\"filter\", `url(#motionFilter-${id})`);\n \n   digits.forEach((el, i) => {\n     roulette\n-      ::append(\"text\")\n+      ::prepend(\"text\")\n       ::attr(\"y\", i * fontSize * lineHeight)\n       ::text(el);\n   });\n \n"
+                },
+                {
+                    "date": 1643126945871,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     ::style(\"filter\", `url(#motionFilter-${id})`);\n \n   digits.forEach((el, i) => {\n     roulette\n-      ::prepend(\"text\")\n+      ::append(\"text\")\n       ::attr(\"y\", i * fontSize * lineHeight)\n       ::text(el);\n   });\n \n"
+                },
+                {
+                    "date": 1643127028222,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import loop from \"./loop\";\n-import { select, append, prepend, attr, style, text } from \"./selection\";\n+import { select, append, attr, style, text } from \"./selection\";\n import transition from \"./transition\";\n \n const DIGITS_COUNT = 10;\n const ROTATIONS = 1;\n@@ -17,8 +17,9 @@\n     roulette\n       ::append(\"text\")\n       ::attr(\"y\", i * fontSize * lineHeight)\n       ::text(el);\n+      ::style(\"opacity\", 0.5);\n   });\n \n   console.log('roulette:', roulette)\n   return roulette;\n"
+                },
+                {
+                    "date": 1643127117007,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n     roulette\n       ::append(\"text\")\n       ::attr(\"y\", i * fontSize * lineHeight)\n       ::text(el);\n-      ::style(\"opacity\", 0.5);\n+      ::style(\"opacity\", '0.5');\n   });\n \n   console.log('roulette:', roulette)\n   return roulette;\n"
+                },
+                {
+                    "date": 1643127133208,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n   digits.forEach((el, i) => {\n     roulette\n       ::append(\"text\")\n       ::attr(\"y\", i * fontSize * lineHeight)\n-      ::text(el);\n+      ::text(el)\n       ::style(\"opacity\", '0.5');\n   });\n \n   console.log('roulette:', roulette)\n"
+                },
+                {
+                    "date": 1643127213016,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n     roulette\n       ::append(\"text\")\n       ::attr(\"y\", i * fontSize * lineHeight)\n       ::text(el)\n-      ::style(\"opacity\", '0.5');\n+      ::style(\"opacity\", i === 0 ? '0.5': 1);\n   });\n \n   console.log('roulette:', roulette)\n   return roulette;\n"
+                },
+                {
+                    "date": 1643127564589,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,10 @@\n     roulette\n       ::append(\"text\")\n       ::attr(\"y\", i * fontSize * lineHeight)\n       ::text(el)\n-      ::style(\"opacity\", i === 0 ? '0.5': 1);\n+      ::style(\"fill\", i === 0 ? 'red': 'blue');\n+      // ::style(\"opacity\", i === 0 ? '0.5': 1);\n   });\n \n   console.log('roulette:', roulette)\n   return roulette;\n"
+                },
+                {
+                    "date": 1643127619486,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -186,8 +186,9 @@\n             ).toFixed(1);\n         digit.filter::attr(\"stdDeviation\", `0 ${motionValue}`);\n       },\n       end:\n+      console.log('end')\n         i === 0\n           ? () => {\n               element.querySelectorAll('[style*=\"filter\"]').forEach((ele) => {\n                 ele.style.filter = \"\";\n"
+                },
+                {
+                    "date": 1643127643027,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -186,11 +186,11 @@\n             ).toFixed(1);\n         digit.filter::attr(\"stdDeviation\", `0 ${motionValue}`);\n       },\n       end:\n-      console.log('end')\n-        i === 0\n-          ? () => {\n+      i === 0\n+      ? () => {\n+            console.log('end')\n               element.querySelectorAll('[style*=\"filter\"]').forEach((ele) => {\n                 ele.style.filter = \"\";\n               });\n               cancel();\n"
+                },
+                {
+                    "date": 1643127700601,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -190,9 +190,9 @@\n       i === 0\n       ? () => {\n             console.log('end')\n               element.querySelectorAll('[style*=\"filter\"]').forEach((ele) => {\n-                ele.style.filter = \"\";\n+                // ele.style.filter = \"\";\n               });\n               cancel();\n             }\n           : (e) => e,\n"
+                },
+                {
+                    "date": 1643127720025,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -190,9 +190,9 @@\n       i === 0\n       ? () => {\n             console.log('end')\n               element.querySelectorAll('[style*=\"filter\"]').forEach((ele) => {\n-                // ele.style.filter = \"\";\n+                ele.style.filter = \"\";\n               });\n               cancel();\n             }\n           : (e) => e,\n"
+                },
+                {
+                    "date": 1643127839974,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -192,9 +192,9 @@\n             console.log('end')\n               element.querySelectorAll('[style*=\"filter\"]').forEach((ele) => {\n                 ele.style.filter = \"\";\n               });\n-              cancel();\n+              // cancel();\n             }\n           : (e) => e,\n     });\n     console.log('digitTransition:', digitTransition)\n"
+                },
+                {
+                    "date": 1643127857319,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -192,9 +192,9 @@\n             console.log('end')\n               element.querySelectorAll('[style*=\"filter\"]').forEach((ele) => {\n                 ele.style.filter = \"\";\n               });\n-              // cancel();\n+              cancel();\n             }\n           : (e) => e,\n     });\n     console.log('digitTransition:', digitTransition)\n"
+                },
+                {
+                    "date": 1643127869767,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -190,8 +190,9 @@\n       i === 0\n       ? () => {\n             console.log('end')\n               element.querySelectorAll('[style*=\"filter\"]').forEach((ele) => {\n+                console.log('ele:', ele)\n                 ele.style.filter = \"\";\n               });\n               cancel();\n             }\n"
+                },
+                {
+                    "date": 1643127944354,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -189,10 +189,10 @@\n       end:\n       i === 0\n       ? () => {\n             console.log('end')\n+            console.log('element:', element)\n               element.querySelectorAll('[style*=\"filter\"]').forEach((ele) => {\n-                console.log('ele:', ele)\n                 ele.style.filter = \"\";\n               });\n               cancel();\n             }\n"
+                },
+                {
+                    "date": 1643128023772,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,9 @@\n     roulette\n       ::append(\"text\")\n       ::attr(\"y\", i * fontSize * lineHeight)\n       ::text(el)\n+      ::attr(\"class\": \"js-bounty__zero\")\n       ::style(\"fill\", i === 0 ? 'red': 'blue');\n       // ::style(\"opacity\", i === 0 ? '0.5': 1);\n   });\n \n"
+                },
+                {
+                    "date": 1643128142340,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -191,8 +191,11 @@\n       i === 0\n       ? () => {\n             console.log('end')\n             console.log('element:', element)\n+            element.querySelectorAll('.js-bounty__zero').forEach(el => {\n+              el.style.opacity = 1;\n+            });\n               element.querySelectorAll('[style*=\"filter\"]').forEach((ele) => {\n                 ele.style.filter = \"\";\n               });\n               cancel();\n"
+                },
+                {
+                    "date": 1643128162922,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,10 +18,9 @@\n       ::append(\"text\")\n       ::attr(\"y\", i * fontSize * lineHeight)\n       ::text(el)\n       ::attr(\"class\": \"js-bounty__zero\")\n-      ::style(\"fill\", i === 0 ? 'red': 'blue');\n-      // ::style(\"opacity\", i === 0 ? '0.5': 1);\n+      ::style(\"opacity\", i === 0 ? '0.5': '1');\n   });\n \n   console.log('roulette:', roulette)\n   return roulette;\n"
+                },
+                {
+                    "date": 1643128194095,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n     roulette\n       ::append(\"text\")\n       ::attr(\"y\", i * fontSize * lineHeight)\n       ::text(el)\n-      ::attr(\"class\": \"js-bounty__zero\")\n+      ::attr(\"class\", \"js-bounty__zero\")\n       ::style(\"opacity\", i === 0 ? '0.5': '1');\n   });\n \n   console.log('roulette:', roulette)\n"
+                },
+                {
+                    "date": 1643128212261,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n       ::append(\"text\")\n       ::attr(\"y\", i * fontSize * lineHeight)\n       ::text(el)\n       ::attr(\"class\", \"js-bounty__zero\")\n-      ::style(\"opacity\", i === 0 ? '0.5': '1');\n+      ::style(\"opacity\", i === 0 ? '0': '1');\n   });\n \n   console.log('roulette:', roulette)\n   return roulette;\n"
                 }
             ],
             "date": 1643107097002,

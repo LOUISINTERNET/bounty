@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1643123232261,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1643126969617,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,5 @@\n export { default as select } from './select';\n export { default as append } from './append';\n-export { default as prepend } from './prepend';\n export { default as attr } from './attr';\n export { default as style } from './style';\n export { default as text } from './text';\n"
                 }
             ],
             "date": 1643123232261,

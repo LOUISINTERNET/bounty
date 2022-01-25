@@ -1,5 +1,5 @@
 import loop from "./loop";
-import { select, append, prepend, attr, style, text } from "./selection";
+import { select, append, attr, style, text } from "./selection";
 import transition from "./transition";
 
 const DIGITS_COUNT = 10;
@@ -7,7 +7,7 @@ const ROTATIONS = 1;
 
 const createDigitRoulette = (svg, fontSize, lineHeight, id) => {
   // const digits = [0, 9,8,7,6,5,4,3,2,1, 0];
-  const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+  const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ,0];
   const roulette = svg
     ::append("g")
     ::attr("id", `digit-${id}`)
@@ -17,7 +17,9 @@ const createDigitRoulette = (svg, fontSize, lineHeight, id) => {
     roulette
       ::append("text")
       ::attr("y", i * fontSize * lineHeight)
-      ::text(el);
+      ::text(el)
+      ::attr("class", "js-bounty__zero")
+      ::style("opacity", i === 0 ? '0': '1');
   });
 
   console.log('roulette:', roulette)
@@ -185,8 +187,13 @@ export default ({
         digit.filter::attr("stdDeviation", `0 ${motionValue}`);
       },
       end:
-        i === 0
-          ? () => {
+      i === 0
+      ? () => {
+            console.log('end')
+            console.log('element:', element)
+            element.querySelectorAll('.js-bounty__zero').forEach(el => {
+              el.style.opacity = 1;
+            });
               element.querySelectorAll('[style*="filter"]').forEach((ele) => {
                 ele.style.filter = "";
               });
@@ -236,6 +243,6 @@ export default ({
   const resume = () => {
     transitions.forEach((transition) => transition.resume());
   };
-
+  // pause();
   return { cancel, pause, resume };
 };

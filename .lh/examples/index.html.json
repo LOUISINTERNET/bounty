@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 21,
+            "activePatchIndex": 22,
             "patches": [
                 {
                     "date": 1643106920462,
@@ -92,6 +92,10 @@
                 {
                     "date": 1643120849539,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,9 +33,9 @@\n   asdf\n   <div class=\"js-bounty\"></div>\n   <script src=\"../lib/bounty.js\"></script>\n   <script>\n-    bounty.default({ el: '.js-bounty', value: '250000', rotations: '10' })\n+    bounty.default({ el: '.js-bounty', value: '250000', rotations: '1' })\n   </script>\n </body>\n \n </html>\n"
+                },
+                {
+                    "date": 1643126128412,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,9 +33,9 @@\n   asdf\n   <div class=\"js-bounty\"></div>\n   <script src=\"../lib/bounty.js\"></script>\n   <script>\n-    bounty.default({ el: '.js-bounty', value: '250000', rotations: '1' })\n+    bounty.default({ el: '.js-bounty', value: '250000', rotations: '1', animationDelay: 1000 })\n   </script>\n </body>\n \n </html>\n"
                 }
             ],
             "date": 1643106920462,
