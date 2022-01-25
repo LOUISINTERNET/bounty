@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/selection/index.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1643123232261,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1643123232261,
+            "name": "Commit-0",
+            "content": "export { default as select } from './select';\nexport { default as append } from './append';\nexport { default as prepend } from './prepend';\nexport { default as attr } from './attr';\nexport { default as style } from './style';\nexport { default as text } from './text';\n"
+        }
+    ]
+}

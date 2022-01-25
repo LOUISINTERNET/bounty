@@ -1,11 +1,12 @@
 import loop from "./loop";
-import { select, append, attr, style, text } from "./selection";
+import { select, append, prepend, attr, style, text } from "./selection";
 import transition from "./transition";
 
 const DIGITS_COUNT = 10;
-const ROTATIONS = 3;
+const ROTATIONS = 1;
 
 const createDigitRoulette = (svg, fontSize, lineHeight, id) => {
+  // const digits = [0, 9,8,7,6,5,4,3,2,1, 0];
   const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
   const roulette = svg
     ::append("g")
@@ -15,10 +16,11 @@ const createDigitRoulette = (svg, fontSize, lineHeight, id) => {
   digits.forEach((el, i) => {
     roulette
       ::append("text")
-      ::attr("y", -i * fontSize * lineHeight)
+      ::attr("y", i * fontSize * lineHeight)
       ::text(el);
   });
 
+  console.log('roulette:', roulette)
   return roulette;
 };
 
@@ -88,9 +90,10 @@ export default ({
   initialValue = null,
   lineHeight = 1.35,
   letterSpacing = 1,
-  animationDelay = 100,
-  letterAnimationDelay = 100,
+  animationDelay = 0,
+  letterAnimationDelay = 0,
   duration = 3000,
+  rotations = 1,
 }) => {
   const element = select(el);
   const computedStyle = window.getComputedStyle(element);
@@ -122,8 +125,11 @@ export default ({
   };
 
   const initialString = String(initialValue || "0");
+  console.log('initialString:', initialString)
   const values = prepareValues(String(value), initialString);
+  console.log('values:', values)
   const initial = prepareValues(initialString, String(value));
+  console.log('initial:', initial)
 
   const chars = values.map((char, i) => {
     const id = `${i}-${salt}`;
@@ -153,9 +159,10 @@ export default ({
   const transitions = [];
   const digits = chars.filter((char) => char.isDigit);
   digits.forEach((digit, i) => {
+    console.log('i:', i)
     const sourceDistance = digit.initial * (fontSize * lineHeight);
     const targetDistance =
-      (ROTATIONS * DIGITS_COUNT + digit.value) * (fontSize * lineHeight);
+      (rotations * i * DIGITS_COUNT + digit.value) * (fontSize * lineHeight);
     const digitTransition = transition({
       from: sourceDistance,
       to: targetDistance,
@@ -163,7 +170,7 @@ export default ({
       delay: (digits.length - 1 - i) * letterAnimationDelay + animationDelay,
       step(value) {
         digit.offset.y =
-          offset + (value % (fontSize * lineHeight * DIGITS_COUNT));
+          offset - (value % (fontSize * lineHeight * DIGITS_COUNT));
         digit.node::attr(
           "transform",
           `translate(${digit.offset.x}, ${digit.offset.y})`
@@ -172,9 +179,9 @@ export default ({
         const motionValue = Number(
           Math.abs(
             Math.abs(Math.abs(value - filterOrigin) - filterOrigin) -
-              sourceDistance
-          ) / 100
-        ).toFixed(1);
+            sourceDistance
+            ) / 100
+            ).toFixed(1);
         digit.filter::attr("stdDeviation", `0 ${motionValue}`);
       },
       end:
@@ -187,6 +194,7 @@ export default ({
             }
           : (e) => e,
     });
+    console.log('digitTransition:', digitTransition)
     transitions.push(digitTransition);
   });
 

@@ -4,9 +4,10 @@
   "description": "SVG library for transitioning numbers with motion blur",
   "main": "lib/bounty.js",
   "scripts": {
-    "start": "webpack-dev-server --progress --colors --inline --host 0.0.0.0",
+    "start": "webpack serve --progress --colors --inline --host 0.0.0.0",
     "build": "webpack -p",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "webpack serve"
   },
   "files": [
     "lib/*.js"
@@ -37,6 +38,9 @@
     "eslint-plugin-jsx-a11y": "^2.0.1",
     "eslint-plugin-react": "^6.0.0",
     "webpack": "^1.13.1",
-    "webpack-dev-server": "^3.1.11"
+    "webpack-dev-server": "^4.7.3"
+  },
+  "dependencies": {
+    "webpack-cli": "^4.9.2"
   }
 }

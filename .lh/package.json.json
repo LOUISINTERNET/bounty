@@ -1,0 +1,22 @@
+{
+    "sourceFile": "package.json",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1643121810362,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1643121891278,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,10 @@\n   \"main\": \"lib/bounty.js\",\n   \"scripts\": {\n     \"start\": \"webpack serve --progress --colors --inline --host 0.0.0.0\",\n     \"build\": \"webpack -p\",\n-    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\"\n+    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\",\n+    \"start:dev\": \"webpack serve\"\n   },\n   \"files\": [\n     \"lib/*.js\"\n   ],\n"
+                }
+            ],
+            "date": 1643121810362,
+            "name": "Commit-0",
+            "content": "{\n  \"name\": \"bounty\",\n  \"version\": \"1.3.0\",\n  \"description\": \"SVG library for transitioning numbers with motion blur\",\n  \"main\": \"lib/bounty.js\",\n  \"scripts\": {\n    \"start\": \"webpack serve --progress --colors --inline --host 0.0.0.0\",\n    \"build\": \"webpack -p\",\n    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\"\n  },\n  \"files\": [\n    \"lib/*.js\"\n  ],\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"git+https://github.com/coderitual/bounty.git\"\n  },\n  \"keywords\": [\n    \"svg\",\n    \"odometer\",\n    \"effect\",\n    \"animation\",\n    \"ui\",\n    \"library\",\n    \"webcomponents\"\n  ],\n  \"author\": \"Michal Skowronek <skowronkow@gmail.com>\",\n  \"license\": \"MIT\",\n  \"devDependencies\": {\n    \"babel-core\": \"^6.13.2\",\n    \"babel-loader\": \"^6.2.4\",\n    \"babel-preset-es2015\": \"^6.13.2\",\n    \"babel-preset-stage-0\": \"^6.5.0\",\n    \"eslint\": \"^4.18.2\",\n    \"eslint-config-airbnb\": \"^10.0.0\",\n    \"eslint-plugin-import\": \"^1.12.0\",\n    \"eslint-plugin-jsx-a11y\": \"^2.0.1\",\n    \"eslint-plugin-react\": \"^6.0.0\",\n    \"webpack\": \"^1.13.1\",\n    \"webpack-dev-server\": \"^3.1.11\"\n  },\n  \"dependencies\": {\n    \"webpack-cli\": \"^4.9.2\"\n  }\n}\n"
+        }
+    ]
+}
