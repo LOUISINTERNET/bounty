@@ -20,7 +20,6 @@ const createDigitRoulette = (svg, fontSize, lineHeight, id) => {
       ::style("opacity", i === 0 ? '0': '1')
   })
 
-  console.log('roulette:', roulette)
   return roulette
 }
 
