@@ -1,15 +1,15 @@
-import loop from "./loop";
-import { select, append, attr, style, text } from "./selection";
-import transition from "./transition";
+import loop from "./loop"
+import { select, append, attr, style, text } from "./selection"
+import transition from "./transition"
 
-const DIGITS_COUNT = 10;
+const DIGITS_COUNT = 10
 
 const createDigitRoulette = (svg, fontSize, lineHeight, id) => {
-  const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ,0];
+  const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
   const roulette = svg
     ::append("g")
     ::attr("id", `digit-${id}`)
-    ::style("filter", `url(#motionFilter-${id})`);
+    ::style("filter", `url(#motionFilter-${id})`)
 
   digits.forEach((el, i) => {
     roulette
@@ -17,15 +17,15 @@ const createDigitRoulette = (svg, fontSize, lineHeight, id) => {
       ::attr("y", i * fontSize * lineHeight)
       ::text(el)
       ::attr("class", "js-bounty__zero")
-      ::style("opacity", i === 0 ? '0': '1');
-  });
+      ::style("opacity", i === 0 ? '0': '1')
+  })
 
   console.log('roulette:', roulette)
-  return roulette;
-};
+  return roulette
+}
 
 const createCharacter = (svg, el, fontSize) =>
-  svg::append("g")::append("text")::text(el);
+  svg::append("g")::append("text")::text(el)
 
 const createFilter = (defs, id) =>
   defs
@@ -36,7 +36,7 @@ const createFilter = (defs, id) =>
     ::append("feGaussianBlur")
     ::attr("class", "blurValues")
     ::attr("in", "SourceGraphic")
-    ::attr("stdDeviation", "0 0");
+    ::attr("stdDeviation", "0 0")
 
 const createGradient = (defs, id) =>
   defs
@@ -64,7 +64,7 @@ const createGradient = (defs, id) =>
     ::append("stop")
     ::attr("offset", "1")
     ::attr("stop-color", "white")
-    ::attr("stop-opacity", "0");
+    ::attr("stop-opacity", "0")
 
 const createMask = (defs, id) =>
   defs
@@ -75,14 +75,14 @@ const createMask = (defs, id) =>
     ::attr("y", 0)
     ::attr("width", "100%")
     ::attr("height", "100%")
-    ::attr("fill", `url(#gradient-${id})`);
+    ::attr("fill", `url(#gradient-${id})`)
 
 const setViewBox = (svg, width, height) => {
-  svg::attr("width", width);
-  svg::attr("height", height);
-  svg::attr("viewBox", `0 0 ${width} ${height}`);
-  svg::style("overflow", "hidden");
-};
+  svg::attr("width", width)
+  svg::attr("height", height)
+  svg::attr("viewBox", `0 0 ${width} ${height}`)
+  svg::style("overflow", "hidden")
+}
 
 export default ({
   el,
@@ -96,51 +96,48 @@ export default ({
   rotations = 1,
   startManually = false
 }) => {
-  const element = select(el);
-  const computedStyle = window.getComputedStyle(element);
-  const fontSize = parseInt(computedStyle.fontSize, 10);
-  const marginBottom = (fontSize * lineHeight - fontSize) / 2 + fontSize / 10;
-  const offset = fontSize * lineHeight - marginBottom;
-  const salt = Date.now();
+  const element = select(el)
+  const computedStyle = window.getComputedStyle(element)
+  const fontSize = parseInt(computedStyle.fontSize, 10)
+  const marginBottom = (fontSize * lineHeight - fontSize) / 2 + fontSize / 10
+  const offset = fontSize * lineHeight - marginBottom
+  const salt = Date.now()
 
-  let canvasWidth = 0;
-  const canvasHeight = fontSize * lineHeight + marginBottom;
+  let canvasWidth = 0
+  const canvasHeight = fontSize * lineHeight + marginBottom
 
-  element.innerHTML = "";
-  const root = element::append("svg");
-  const svg = root::append("svg")::attr("mask", `url(#mask-${salt})`);
-  const defs = root::append("defs");
-  createGradient(defs, salt);
-  createMask(defs, salt);
+  element.innerHTML = ""
+  const root = element::append("svg")
+  const svg = root::append("svg")::attr("mask", `url(#mask-${salt})`)
+  const defs = root::append("defs")
+  createGradient(defs, salt)
+  createMask(defs, salt)
 
   const prepareValues = (value, secondValue) => {
-    const values = String(value).replace(/ /g, "\u00a0").split("");
+    const values = String(value).replace(/ /g, "\u00a0").split("")
 
-    const digitIndex = String(value).search(/\d/);
+    const digitIndex = String(value).search(/\d/)
     while (secondValue.length > values.length) {
       const char =
-        secondValue[secondValue.length - values.length - 1 + digitIndex];
-      values.splice(digitIndex, 0, isNaN(parseInt(char, 10)) ? char : "0");
+        secondValue[secondValue.length - values.length - 1 + digitIndex]
+      values.splice(digitIndex, 0, isNaN(parseInt(char, 10)) ? char : "0")
     }
-    return values;
-  };
+    return values
+  }
 
-  const initialString = String(initialValue || "0");
-  console.log('initialString:', initialString)
-  const values = prepareValues(String(value), initialString);
-  console.log('values:', values)
-  const initial = prepareValues(initialString, String(value));
-  console.log('initial:', initial)
+  const initialString = String(initialValue || "0")
+  const values = prepareValues(String(value), initialString)
+  const initial = prepareValues(initialString, String(value))
 
   const chars = values.map((char, i) => {
-    const id = `${i}-${salt}`;
+    const id = `${i}-${salt}`
     if (isNaN(parseInt(char, 10)) || isNaN(parseInt(initial[i], 10))) {
       return {
         isDigit: false,
         node: createCharacter(svg, char, fontSize),
         value: char,
         offset: { x: 0, y: offset },
-      };
+      }
     } else {
       return {
         isDigit: true,
@@ -153,17 +150,16 @@ export default ({
           x: 0,
           y: offset + Number(initial[i]) * (fontSize * lineHeight),
         },
-      };
+      }
     }
-  });
+  })
 
-  const transitions = [];
-  const digits = chars.filter((char) => char.isDigit);
+  const transitions = []
+  const digits = chars.filter((char) => char.isDigit)
   digits.forEach((digit, i) => {
-    console.log('i:', i)
-    const sourceDistance = digit.initial * (fontSize * lineHeight);
+    const sourceDistance = digit.initial * (fontSize * lineHeight)
     const targetDistance =
-      (rotations * i * DIGITS_COUNT + digit.value) * (fontSize * lineHeight);
+      (rotations * i * DIGITS_COUNT + digit.value) * (fontSize * lineHeight)
     const digitTransition = transition({
       from: sourceDistance,
       to: targetDistance,
@@ -171,79 +167,77 @@ export default ({
       delay: (digits.length - 1 - i) * letterAnimationDelay + animationDelay,
       step(value) {
         digit.offset.y =
-          offset - (value % (fontSize * lineHeight * DIGITS_COUNT));
-        digit.node::attr(
+          offset - (value % (fontSize * lineHeight * DIGITS_COUNT))
+        digit.node:: attr(
           "transform",
           `translate(${digit.offset.x}, ${digit.offset.y})`
-        );
-        const filterOrigin = (sourceDistance + targetDistance) / 2;
+        )
+        const filterOrigin = (sourceDistance + targetDistance) / 2
         const motionValue = Number(
           Math.abs(
             Math.abs(Math.abs(value - filterOrigin) - filterOrigin) -
             sourceDistance
-            ) / 100
-            ).toFixed(1);
-        digit.filter::attr("stdDeviation", `0 ${motionValue}`);
+          ) / 100
+        ).toFixed(1)
+        digit.filter:: attr("stdDeviation", `0 ${motionValue}`)
       },
       end:
-      i === 0
-      ? () => {
-            console.log('end')
-            console.log('element:', element)
+        i === 0
+          ? () => {
             element.querySelectorAll('.js-bounty__zero').forEach(el => {
-              el.style.opacity = 1;
-            });
-              element.querySelectorAll('[style*="filter"]').forEach((ele) => {
-                ele.style.filter = "";
-              });
-              cancel();
-            }
+              el.style.opacity = 1
+            })
+            element.querySelectorAll('[style*="filter"]').forEach((ele) => {
+              ele.style.filter = ""
+            })
+            cancel()
+          }
           : (e) => e,
-    });
-    console.log('digitTransition:', digitTransition)
-    transitions.push(digitTransition);
-  });
+    })
+    transitions.push(digitTransition)
+  })
 
   const update = (timestamp) => {
-    canvasWidth = 0;
+    canvasWidth = 0
     chars.forEach((char) => {
-      const { width } = char.node.getBBox();
+      const { width } = char.node.getBBox()
 
-      char.offset.x = canvasWidth;
+      char.offset.x = canvasWidth
       // set proper kerning for proportional fonts
       if (char.isDigit) {
         [...char.node.childNodes].forEach((element) => {
-          const { width: letterWidth } = element.getBBox();
-          const offset = (width - letterWidth) / 2;
-          element.setAttribute("x", offset);
-        });
+          const { width: letterWidth } = element.getBBox()
+          const offset = (width - letterWidth) / 2
+          element.setAttribute("x", offset)
+        })
       }
 
-      canvasWidth += width + letterSpacing;
-    });
-    canvasWidth -= letterSpacing;
+      canvasWidth += width + letterSpacing
+    })
+    canvasWidth -= letterSpacing
 
     chars.forEach((char) => {
       char.node::attr(
         "transform",
         `translate(${char.offset.x}, ${char.offset.y})`
-      );
-    });
+      )
+    })
 
-    setViewBox(root, canvasWidth, canvasHeight);
-    transitions.forEach((transition) => transition.update(timestamp));
-  };
+    setViewBox(root, canvasWidth, canvasHeight)
+    transitions.forEach((transition) => transition.update(timestamp))
+  }
 
-  const cancel = loop(update);
+  const cancel = loop(update)
 
   const pause = () => {
-    transitions.forEach((transition) => transition.pause());
-  };
-  const resume = () => {
-    transitions.forEach((transition) => transition.resume());
-  };
-  if(startManually) {
-    pause();
+    transitions.forEach((transition) => transition.pause())
   }
-  return { cancel, pause, resume };
-};
+  const resume = () => {
+    transitions.forEach((transition) => transition.resume())
+  }
+
+  if(startManually) {
+    pause()
+  }
+  return { cancel, pause, resume }
+}
