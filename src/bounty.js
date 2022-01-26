@@ -3,10 +3,8 @@ import { select, append, attr, style, text } from "./selection";
 import transition from "./transition";
 
 const DIGITS_COUNT = 10;
-const ROTATIONS = 1;
 
 const createDigitRoulette = (svg, fontSize, lineHeight, id) => {
-  // const digits = [0, 9,8,7,6,5,4,3,2,1, 0];
   const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ,0];
   const roulette = svg
     ::append("g")
@@ -96,6 +94,7 @@ export default ({
   letterAnimationDelay = 0,
   duration = 3000,
   rotations = 1,
+  startManually = false
 }) => {
   const element = select(el);
   const computedStyle = window.getComputedStyle(element);
@@ -243,6 +242,8 @@ export default ({
   const resume = () => {
     transitions.forEach((transition) => transition.resume());
   };
-  // pause();
+  if(startManually) {
+    pause();
+  }
   return { cancel, pause, resume };
 };

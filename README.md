@@ -41,7 +41,9 @@ bounty({
   letterSpacing: 1,
   animationDelay: 100,
   letterAnimationDelay: 100,
-  duration: 3000
+  duration: 3000,
+  rotations: 1,
+  startManually: false
 });
 ```
 

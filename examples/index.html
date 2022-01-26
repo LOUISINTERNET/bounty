@@ -34,7 +34,11 @@
   <div class="js-bounty"></div>
   <script src="../lib/bounty.js"></script>
   <script>
-    bounty.default({ el: '.js-bounty', value: '250000', rotations: '1', animationDelay: 1000 })
+    const b = bounty.default({ el: '.js-bounty', value: '250000', rotations: '1', animationDelay: 1000, startManually: true })
+    setTimeout(() => {
+      console.log('start')
+      b.resume()
+    }, 1000)
   </script>
 </body>
 
