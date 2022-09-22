@@ -20,7 +20,6 @@ const createDigitRoulette = (svg, fontSize, lineHeight, id) => {
       ::style("opacity", i === 0 ? '0': '1');
   });
 
-  console.log('roulette:', roulette)
   return roulette;
 };
 
@@ -94,7 +93,8 @@ export default ({
   letterAnimationDelay = 0,
   duration = 3000,
   rotations = 1,
-  startManually = false
+  startManually = false,
+  motionBlur = true
 }) => {
   const element = select(el);
   const computedStyle = window.getComputedStyle(element);
@@ -126,11 +126,8 @@ export default ({
   };
 
   const initialString = String(initialValue || "0");
-  console.log('initialString:', initialString)
   const values = prepareValues(String(value), initialString);
-  console.log('values:', values)
   const initial = prepareValues(initialString, String(value));
-  console.log('initial:', initial)
 
   const chars = values.map((char, i) => {
     const id = `${i}-${salt}`;
@@ -160,7 +157,6 @@ export default ({
   const transitions = [];
   const digits = chars.filter((char) => char.isDigit);
   digits.forEach((digit, i) => {
-    console.log('i:', i)
     const sourceDistance = digit.initial * (fontSize * lineHeight);
     const targetDistance =
       (rotations * i * DIGITS_COUNT + digit.value) * (fontSize * lineHeight);
@@ -176,20 +172,24 @@ export default ({
           "transform",
           `translate(${digit.offset.x}, ${digit.offset.y})`
         );
-        const filterOrigin = (sourceDistance + targetDistance) / 2;
-        const motionValue = Number(
-          Math.abs(
-            Math.abs(Math.abs(value - filterOrigin) - filterOrigin) -
-            sourceDistance
-            ) / 100
-            ).toFixed(1);
+        let motionValue
+        if(motionBlur) {
+          const filterOrigin = (sourceDistance + targetDistance) / 2;
+          motionValue = Number(
+            Math.abs(
+              Math.abs(Math.abs(value - filterOrigin) - filterOrigin) -
+              sourceDistance
+              ) / 100
+              ).toFixed(1);
+        } else {
+          motionValue = 0
+        }
+
         digit.filter::attr("stdDeviation", `0 ${motionValue}`);
       },
       end:
       i === 0
       ? () => {
-            console.log('end')
-            console.log('element:', element)
             element.querySelectorAll('.js-bounty__zero').forEach(el => {
               el.style.opacity = 1;
             });
@@ -200,7 +200,6 @@ export default ({
             }
           : (e) => e,
     });
-    console.log('digitTransition:', digitTransition)
     transitions.push(digitTransition);
   });
 

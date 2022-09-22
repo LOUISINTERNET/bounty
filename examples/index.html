@@ -30,15 +30,20 @@
 </head>
 
 <body>
-  asdf
   <div class="js-bounty"></div>
+  <div class="js-bounty2"></div>
   <script src="../lib/bounty.js"></script>
   <script>
-    const b = bounty.default({ el: '.js-bounty', value: '250000', rotations: '1', animationDelay: 1000, startManually: true })
+    const b = bounty.default({ el: '.js-bounty', value: '250000', rotations: '1', animationDelay: 1000, startManually: true , motionBlur: false})
+    const b2 = bounty.default({ el: '.js-bounty2', value: '250000', rotations: '1', animationDelay: 1000, startManually: true , motionBlur: true})
     setTimeout(() => {
       console.log('start')
       b.resume()
-    }, 1000)
+    }, 500)
+    setTimeout(() => {
+      console.log('start')
+      b2.resume()
+    }, 3000)
   </script>
 </body>
 
