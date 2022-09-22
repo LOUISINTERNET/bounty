@@ -1,0 +1,12 @@
+{
+  "favorites.resources": [
+    {
+      "filePath": "examples/index.html",
+      "group": "Default"
+    },
+    {
+      "filePath": "src/bounty.js",
+      "group": "Default"
+    }
+  ]
+}

@@ -93,7 +93,8 @@ export default ({
   letterAnimationDelay = 0,
   duration = 3000,
   rotations = 1,
-  startManually = false
+  startManually = false,
+  motionBlur = true
 }) => {
   const element = select(el)
   const computedStyle = window.getComputedStyle(element)
@@ -170,15 +171,21 @@ export default ({
         digit.node:: attr(
           "transform",
           `translate(${digit.offset.x}, ${digit.offset.y})`
-        )
-        const filterOrigin = (sourceDistance + targetDistance) / 2
-        const motionValue = Number(
-          Math.abs(
-            Math.abs(Math.abs(value - filterOrigin) - filterOrigin) -
-            sourceDistance
-          ) / 100
-        ).toFixed(1)
-        digit.filter:: attr("stdDeviation", `0 ${motionValue}`)
+        );
+        let motionValue
+        if(motionBlur) {
+          const filterOrigin = (sourceDistance + targetDistance) / 2;
+          motionValue = Number(
+            Math.abs(
+              Math.abs(Math.abs(value - filterOrigin) - filterOrigin) -
+              sourceDistance
+              ) / 100
+              ).toFixed(1);
+        } else {
+          motionValue = 0
+        }
+
+        digit.filter::attr("stdDeviation", `0 ${motionValue}`);
       },
       end:
         i === 0
